@@ -1,11 +1,5 @@
 let memories = [];
 let currentMemory = null;
-let fireworks = [];
-
-function preload() {
-    // Load memory data from the external JSON file
-    memories = loadJSON('memories.json');
-}
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -34,9 +28,6 @@ function submitMemory() {
 
         // Save to localStorage
         localStorage.setItem('memories', JSON.stringify(memories));
-
-        // Trigger fireworks
-        triggerFireworks();
 
         // Display the new memory and show an animation
         displayMemory(memory);
@@ -72,43 +63,4 @@ function displayMemory(memory) {
             clearInterval(fadeInterval);
         }
     }, 50);
-}
-
-// Trigger fireworks effect when a new memory is submitted
-function triggerFireworks() {
-    for (let i = 0; i < 10; i++) {
-        fireworks.push(new Firework(random(width), random(height - 100), random(255), random(255), random(255)));
-    }
-}
-
-function draw() {
-    // Draw fireworks and animate them
-    for (let firework of fireworks) {
-        firework.update();
-        firework.display();
-    }
-}
-
-// Firework class to create fireworks effects
-class Firework {
-    constructor(x, y, r, g, b) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.size = 10;
-        this.alpha = 255;
-    }
-
-    update() {
-        this.size += 10;
-        this.alpha -= 5;
-    }
-
-    display() {
-        noStroke();
-        fill(this.r, this.g, this.b, this.alpha);
-        ellipse(this.x, this.y, this.size);
-    }
 }
